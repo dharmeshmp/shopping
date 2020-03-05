@@ -11,7 +11,7 @@
     <a class="my-0 navbar-brand col-sm-3 col-md-2 mr-md-auto" href="/">Shopping</a>
     <a class="btn btn-primary mr-2" href="admin">Admin</a>
     <a href="cart" class="btn btn-primary">
-        Cart <span class="badge badge-light">4</span>
+        Cart <span class="badge badge-light">${cartItems}</span>
     </a>
 </div>
 
@@ -28,6 +28,7 @@
                     <div class="card-body">
                         <h1 class="card-title pricing-card-title">$${product.price}</h1>
                         <p>${product.description}</p>
+                        <a href="cart/add/${product.id}" class="btn btn-primary">Add to cart</a>
                     </div>
                 </div>
             </div>

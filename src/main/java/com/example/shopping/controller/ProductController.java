@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class ProductController {
 
@@ -20,8 +24,14 @@ public class ProductController {
     }
 
     @GetMapping
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
         model.addAttribute("products", productService.findAll());
+        @SuppressWarnings("unchecked") var cart = (List<Product>) session.getAttribute("cart");
+        var cartItems = 0;
+        if (cart != null) {
+            cartItems = cart.size();
+        }
+        model.addAttribute("cartItems", cartItems);
         return "home";
     }
 
@@ -56,5 +66,19 @@ public class ProductController {
         productService.save(product);
         model.addAttribute("products", productService.findAll());
         return "redirect:/admin";
+    }
+
+    @GetMapping("/cart/add/{id}")
+    public String addToCart(@PathVariable Long id, HttpSession session) {
+        var product = productService.findById(id);
+        @SuppressWarnings("unchecked")
+        var cart = (List<Product>) session.getAttribute("cart");
+
+        if (cart == null) {
+            cart = new ArrayList<>();
+        }
+        cart.add(product);
+        session.setAttribute("cart", cart);
+        return "redirect:/";
     }
 }
