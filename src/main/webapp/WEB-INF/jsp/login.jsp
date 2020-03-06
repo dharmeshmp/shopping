@@ -62,15 +62,17 @@
 <body class="text-center">
 <form method="post" action="/login" class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+    <c:if test="${param.error != null}">
+        <p>
+            Invalid credentials
+        </p>
+    </c:if>
+
     <label for="username" class="sr-only">Email address</label>
     <input type="text" id="username" name="username" class="form-control" placeholder="Email address" required autofocus>
     <label for="password" class="sr-only">Password</label>
     <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-<%--    <div class="checkbox mb-3">--%>
-<%--        <label>--%>
-<%--            <input type="checkbox" value="remember-me"> Remember me--%>
-<%--        </label>--%>
-<%--    </div>--%>
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 </body>
